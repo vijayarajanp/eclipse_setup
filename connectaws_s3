@@ -34,9 +34,10 @@ object Sample {
   
   sc.hadoopConfiguration.set("fs.s3n.awsAccessKeyId", "key")
   sc.hadoopConfiguration.set("fs.s3n.awsSecretAccessKey", "key")
+  sc.hadoopConfiguration.set("fs.s3n.impl","org.apache.hadoop.fs.s3native.NativeS3FileSystem")
   
   
-  val csv1 = sc.textFile("s3n://at-spring/*")
+  val csv1 = sc.textFile("s3n://at-spring/")
   println(csv1.count)
   csv1.count
   println("Success")
