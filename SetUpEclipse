@@ -56,6 +56,8 @@ Jackson version is too old 2.4.4
 Update version = 2.6.5
 
 For SBT:
+Note: For spark 2 we should change the jackson version as 2.6.5
+
 name := "testSpark2"
 
 version := "1.0"
