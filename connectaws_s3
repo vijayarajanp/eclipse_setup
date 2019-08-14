@@ -1,0 +1,44 @@
+
+import org.apache.spark.sql.SparkSession
+import org.apache.hadoop
+//Refer the pom.xml
+
+object Sample {
+
+  def main(args: Array[String]): Unit ={
+  
+  /*
+  For windows we need to add below winutil.exe 
+  
+  URL: https://github.com/steveloughran/winutils
+  
+ 1. download winutils.exe from above URL
+ 2. extract and paste into the following location "C:\Hadoop"
+ 3. Don't include the "bin" in the "hadoop_home" variable path
+ 4. in program add following line before creating SparkContext or SparkConf System.setProperty("hadoop.home.dir", "C:\Hadoop")
+
+  
+  */
+  
+  System.setProperty("hadoop.home.dir","c:\\winutil\\hadoop-2.7.1")  //Should be added before initate the Spark Session & Spark context
+    
+  val spark = SparkSession.builder().appName("aws_connect")
+  .master("local[2]").getOrCreate()
+  
+  val sc = spark.sparkContext
+  
+  sc.setLogLevel("ERROR")
+  
+  //println(System.getProperty("HADOOP_HOME"))
+  
+  
+  sc.hadoopConfiguration.set("fs.s3n.awsAccessKeyId", "key")
+  sc.hadoopConfiguration.set("fs.s3n.awsSecretAccessKey", "key")
+  
+  
+  val csv1 = sc.textFile("s3n://at-spring/*")
+  println(csv1.count)
+  csv1.count
+  println("Success")
+  }
+}
